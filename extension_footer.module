@@ -1,13 +1,15 @@
 <?php
-
-// TODO: add webmaster link
 // $Id: extension_footer.module 
 /**
  * Extension Footer
  * Adds a block for contact info, social media, and login/out link
- */
- 
+ */ 
 
+/**
+* Implements hook_install().
+*
+* Sets initial footer values
+*/
 function extension_footer_install() {
   $default_contact = <<< DEFAULT
 <b>Extension &amp; Experiment Station Communications</b><br />
@@ -21,7 +23,6 @@ DEFAULT;
   variable_set('extension_footer_webmaster_url', 'http://extension.oregonstate.edu/node/4404');
 }
  
-
 /**
 * Implements hook_menu().
 *
@@ -37,6 +38,9 @@ function extension_footer_menu() {
  return $items;
 }
 
+/**
+* Function to return the config page form
+*/
 function extension_footer_admin() {
   $form = array();
 
@@ -67,7 +71,11 @@ function extension_footer_admin() {
   return system_settings_form($form);
 }
 
-
+/**
+ * Implements hookr_block_info().
+ *
+ * Adds the block to the blocks admin page
+ */
 function extension_footer_block_info() {
  $blocks = array();
  $blocks['ext_footer'] = array(
@@ -79,7 +87,7 @@ function extension_footer_block_info() {
 /**
  * Implements hook_block_view().
  *
- * This hook outputs the block itself
+ * Outputs the block itself
  */
 function extension_footer_block_view($delta = '') {
   $block = array();
@@ -91,11 +99,19 @@ function extension_footer_block_view($delta = '') {
   return $block;
 }
 
+/**
+ * Function to call the theme
+ */
 function extension_footer_content() {
   $items = array();
   return theme('extension_footer_content', array('items' => $items));
 }
 
+/**
+ * Implements hook_theme().
+ *
+ * Defines the .tpl for formatting the block output
+ */
 function extension_footer_theme() {
   $module_path = drupal_get_path('module', 'extension_footer');
   $base = array(
