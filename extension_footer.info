@@ -1,0 +1,7 @@
+name = Extension Footer
+description = Creates a block with contact info, social media, and login/out link to integrate with the Doug Fir theme.
+package = Other
+version = "7.x-1.0"
+core = "7.x"
+project = "EESC"
+stylesheets[all][] = css/extension_footer.css

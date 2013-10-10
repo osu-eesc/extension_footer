@@ -1,0 +1,110 @@
+<?php
+
+// TODO: add webmaster link
+// $Id: extension_footer.module 
+/**
+ * Extension Footer
+ * Adds a block for contact info, social media, and login/out link
+ */
+ 
+
+function extension_footer_install() {
+  $default_contact = <<< DEFAULT
+<b>Extension &amp; Experiment Station Communications</b><br />
+422 Kerr Administration Building<br />
+Corvallis, Oregon 97331<br />
+<b>Phone:</b> (541) 737-3311<br />
+<b>Fax:</b> (541) 737-0817
+DEFAULT;
+  variable_set('extension_footer_contact', $default_contact);
+  variable_set('extension_footer_webmaster_title', 'Extension Webmaster');
+  variable_set('extension_footer_webmaster_url', 'http://extension.oregonstate.edu/node/4404');
+}
+ 
+
+/**
+* Implements hook_menu().
+*
+* Provides a configuration page
+*/
+function extension_footer_menu() {
+ $items['admin/config/system/site-information/footer'] = array(
+   'page callback' => 'drupal_get_form',
+   'page arguments' => array('extension_footer_admin'),
+   'access callback' => TRUE,
+   'title' => 'Footer',
+ );
+ return $items;
+}
+
+function extension_footer_admin() {
+  $form = array();
+
+  $form['extension_footer_contact'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Contact Information'),
+    '#default_value' => variable_get('extension_footer_contact'),
+    '#rows' => '8',
+    '#description' => t("HTML markup"),
+    '#required' => TRUE,
+  );
+  
+  $form['extension_footer_webmaster'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Webmaster link'),
+    'extension_footer_webmaster_title' => array(
+      '#type' => 'textfield',
+      '#title' => t('Title'),
+      '#default_value' => variable_get('extension_footer_webmaster_title'),
+    ),
+    'extension_footer_webmaster_url' => array(
+      '#type' => 'textfield',
+      '#title' => t('URL'),
+      '#default_value' => variable_get('extension_footer_webmaster_url'),
+    ),
+  );
+
+  return system_settings_form($form);
+}
+
+
+function extension_footer_block_info() {
+ $blocks = array();
+ $blocks['ext_footer'] = array(
+   'info' => t('Contact Info / Social Media / Login'),
+ );
+ return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ *
+ * This hook outputs the block itself
+ */
+function extension_footer_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'ext_footer':
+      $block['content'] = extension_footer_content();
+      break;
+  }
+  return $block;
+}
+
+function extension_footer_content() {
+  $items = array();
+  return theme('extension_footer_content', array('items' => $items));
+}
+
+function extension_footer_theme() {
+  $module_path = drupal_get_path('module', 'extension_footer');
+  $base = array(
+    'path' => "$module_path/theme",   
+  );
+  return array(
+    'extension_footer_content' => $base + array(
+      'template' => 'extension_footer', // leave off .tpl.php
+      'variables' => array('items' => NULL,),
+    ),   
+  );
+}

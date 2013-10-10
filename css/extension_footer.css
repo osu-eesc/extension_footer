@@ -1,0 +1,27 @@
+/* hide the default Doug Fir contact area so we can create our own */
+#footer .row div.contact {
+  display: none;
+}
+
+#footer .social-media a {
+  text-decoration: none;
+  line-height: 24px;
+}
+
+#footer .content .social-media img {
+  margin-right: 8px;
+  margin-top: -4px;
+}
+
+#footer .login {
+  margin-top: 1em;
+}
+
+#footer .login a {
+  color: #666;
+  text-decoration: none;
+}
+
+#footer .login a:hover {
+ color: #ddd; 
+}
