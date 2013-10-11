@@ -1,15 +1,16 @@
 <?php
 // $Id: extension_footer.module 
+
 /**
  * Extension Footer
  * Adds a block for contact info, social media, and login/out link
  */ 
 
 /**
-* Implements hook_install().
-*
-* Sets initial footer values
-*/
+  * Implements hook_install().
+  *
+  * Sets initial footer values
+  */
 function extension_footer_install() {
   $default_contact = <<< DEFAULT
 <b>Extension &amp; Experiment Station Communications</b><br />
@@ -24,14 +25,14 @@ DEFAULT;
 }
  
 /**
-* Implements hook_menu().
-*
-* Provides a configuration page
-*/
+  * Implements hook_menu().
+  *
+  * Provides a configuration page
+  */
 function extension_footer_menu() {
  $items['admin/config/system/site-information/footer'] = array(
    'page callback' => 'drupal_get_form',
-   'page arguments' => array('extension_footer_admin'),
+   'page arguments' => array('extension_footer_form'),
    'access callback' => TRUE,
    'title' => 'Footer',
  );
@@ -39,9 +40,11 @@ function extension_footer_menu() {
 }
 
 /**
-* Function to return the config page form
-*/
-function extension_footer_admin() {
+ * Implements hook_form().
+ *
+ * Returns the configuration form
+ */
+function extension_footer_form() {
   $form = array();
 
   $form['extension_footer_contact'] = array(
@@ -72,7 +75,19 @@ function extension_footer_admin() {
 }
 
 /**
- * Implements hookr_block_info().
+ * Implements hook_form_validate().
+ *
+ * Validates configuration form submissions
+ */
+function extension_footer_form_validate($form, &$form_state) {
+  $webmaster_url = $form['extension_footer_webmaster']['extension_footer_webmaster_url']['#value'];
+  if (!valid_url($webmaster_url, TRUE)) {
+    form_set_error('extension_footer_webmaster_url', "$webmaster_url is not a valid URL.");
+  }
+}
+
+/**
+ * Implements hook_block_info().
  *
  * Adds the block to the blocks admin page
  */
@@ -101,6 +116,8 @@ function extension_footer_block_view($delta = '') {
 
 /**
  * Function to call the theme
+ *
+ * Doesn't do much here but is a good example for the future when content may need to be pulled in
  */
 function extension_footer_content() {
   $items = array();
