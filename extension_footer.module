@@ -79,12 +79,12 @@ function extension_footer_form() {
  *
  * Validates configuration form submissions
  */
-function extension_footer_form_validate($form, &$form_state) {
+/*function extension_footer_form_validate($form, &$form_state) {
   $webmaster_url = $form['extension_footer_webmaster']['extension_footer_webmaster_url']['#value'];
   if (!valid_url($webmaster_url, TRUE)) {
     form_set_error('extension_footer_webmaster_url', "$webmaster_url is not a valid URL.");
   }
-}
+}*/
 
 /**
  * Implements hook_block_info().
