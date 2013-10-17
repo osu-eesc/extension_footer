@@ -13,11 +13,11 @@
   */
 function extension_footer_install() {
   $default_contact = <<< DEFAULT
-<b>Extension &amp; Experiment Station Communications</b><br />
-422 Kerr Administration Building<br />
-Corvallis, Oregon 97331<br />
-<b>Phone:</b> (541) 737-3311<br />
-<b>Fax:</b> (541) 737-0817
+Extension &amp; Experiment<br /> Station Communications<br />
+422 Kerr Administration<br />
+Corvallis, OR 97331<br />
+<br />
+(541) 737-3311
 DEFAULT;
   variable_set('extension_footer_contact', $default_contact);
   variable_set('extension_footer_webmaster_title', 'Extension Webmaster');
